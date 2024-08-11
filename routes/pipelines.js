@@ -57,6 +57,60 @@ let pipelines = [
     type: "Training",
     f_application_uid: "3d064139-bad9-a033-5e89-960948ff9c17", //UAV路徑預測 application 1
   },
+  {
+    id: 7,
+    uid: "9b9d8e96-67d5-4608-91db-0b6373575d28",
+    created_time: "2024-05-10 21:17:54",
+    name: "UAV路徑預測 retrain pipeline 1",
+    description: "retrain pipeline description",
+    type: "Retraining",
+    f_application_uid: "3d064139-bad9-a033-5e89-960948ff9c17", //UAV路徑預測 application 1
+  },
+  {
+    id: 8,
+    uid: "9744050f-719b-4c67-9adb-6317e5b9cfd7",
+    created_time: "2024-05-10 21:17:54",
+    name: "UAV路徑預測 tuning pipeline 1",
+    description: "tuning pipeline description",
+    type: "Tuning",
+    f_application_uid: "3d064139-bad9-a033-5e89-960948ff9c17", //UAV路徑預測 application 1
+  },
+  {
+    id: 9,
+    uid: "6ecee035-34dc-4a7e-b766-6acaa5794468",
+    created_time: "2024-05-10 21:17:54",
+    name: "AI數據分析 retrain pipeline 1",
+    description: "retrain pipeline description",
+    type: "Retraining",
+    f_application_uid: "17c8f0e6-ad1a-673c-4797-a2c252f5af86", //AI數據分析 application 1
+  },
+  {
+    id: 10,
+    uid: "b018db7c-ced2-4a69-bdfc-1556b8765aea",
+    created_time: "2024-05-10 21:17:54",
+    name: "AI數據分析 tuning pipeline 1",
+    description: "tuning pipeline description",
+    type: "Tuning",
+    f_application_uid: "17c8f0e6-ad1a-673c-4797-a2c252f5af86", //AI數據分析 application 1
+  },
+  {
+    id: 11,
+    uid: "0cdefedd-6860-41b8-88fc-5fc979ac5853",
+    created_time: "2024-05-10 21:17:54",
+    name: "UAV路徑預測 evaluation pipeline 1",
+    description: "evaluation pipeline description",
+    type: "Evaluation",
+    f_application_uid: "3d064139-bad9-a033-5e89-960948ff9c17", //UAV路徑預測 application 1
+  },
+  {
+    id: 12,
+    uid: "8afa81d5-46e1-4c6d-9a60-1bca56ddca51",
+    created_time: "2024-05-10 21:17:54",
+    name: "UAV路徑預測 evaluation pipeline 2",
+    description: "evaluation pipeline description",
+    type: "Evaluation",
+    f_application_uid: "3d064139-bad9-a033-5e89-960948ff9c17", //UAV路徑預測 application 1
+  },
 ];
 
 // 取得pipelines
