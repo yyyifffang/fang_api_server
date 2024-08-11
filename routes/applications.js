@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { v4: uuidv4 } = require('uuid');
 
 let applications = [
   {
@@ -71,5 +72,31 @@ router.post("/deleteApplication", (req, res) => {
     res.status(404).json({ message: "Application not found" });
   }
 });
+
+//創建application
+router.post("/createApplication", (req, res) => {
+  const { name, description, projectUID, agentUID } = req.body;
+
+  //創建新的application
+  const newApplication = {
+    id: applications.length + 1,
+    uid: uuidv4(),
+    name,
+    description,
+    created_time: new Date().toISOString().replace('T', ' ').substring(0, 19), // 格式化當前時間
+    f_project_uid: projectUID,
+    f_agent_uid: agentUID
+  };
+
+  try {
+    applications.push(newApplication)
+    console.log("New Application created:", newApplication);
+    //返回創建成功的響應
+    res.json({ detail: "Application created successfully", application: newApplication })
+  } catch (error) {
+    console.error("Error creating application:", error)
+    res.status(500).json({ detail: "Error creating application" });
+  }
+})
 
 module.exports = router;

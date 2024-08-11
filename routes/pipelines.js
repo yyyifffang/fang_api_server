@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { v4: uuidv4 } = require("uuid");
 
 let pipelines = [
   {
@@ -8,7 +9,7 @@ let pipelines = [
     created_time: "2024-05-10 21:17:54",
     name: "UAV路徑預測 preprocessing pipeline 1",
     description: "preprocessing pipeline description",
-    type: "preprocessing",
+    type: "Preprocessing",
     f_application_uid: "3d064139-bad9-a033-5e89-960948ff9c17", //UAV路徑預測 application 1
   },
   {
@@ -17,7 +18,7 @@ let pipelines = [
     created_time: "2024-05-10 21:17:54",
     name: "UAV路徑預測 training pipeline 1",
     description: "training pipeline description",
-    type: "training",
+    type: "Training",
     f_application_uid: "3d064139-bad9-a033-5e89-960948ff9c17", //UAV路徑預測 application 1
   },
   {
@@ -26,7 +27,7 @@ let pipelines = [
     created_time: "2024-05-10 21:17:54",
     name: "AI數據分析 preprocessing pipeline 1",
     description: "preprocessing pipeline description",
-    type: "preprocessing",
+    type: "Preprocessing",
     f_application_uid: "17c8f0e6-ad1a-673c-4797-a2c252f5af86", //AI數據分析 application 1
   },
   {
@@ -35,7 +36,7 @@ let pipelines = [
     created_time: "2024-05-10 21:17:54",
     name: "AI數據分析 training pipeline 1",
     description: "training pipeline description",
-    type: "training",
+    type: "Training",
     f_application_uid: "17c8f0e6-ad1a-673c-4797-a2c252f5af86", //AI數據分析 application 1
   },
   {
@@ -44,7 +45,7 @@ let pipelines = [
     created_time: "2024-05-10 21:17:54",
     name: "UAV路徑預測 preprocessing pipeline 2",
     description: "preprocessing pipeline description",
-    type: "preprocessing",
+    type: "Preprocessing",
     f_application_uid: "3d064139-bad9-a033-5e89-960948ff9c17", //UAV路徑預測 application 1
   },
   {
@@ -53,7 +54,7 @@ let pipelines = [
     created_time: "2024-05-10 21:17:54",
     name: "UAV路徑預測 training pipeline 2",
     description: "training pipeline description",
-    type: "training",
+    type: "Training",
     f_application_uid: "3d064139-bad9-a033-5e89-960948ff9c17", //UAV路徑預測 application 1
   },
 ];

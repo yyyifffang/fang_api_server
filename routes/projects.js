@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {v4:uuidv4}=require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 let projects = [
   {
@@ -58,27 +58,33 @@ router.post("/deleteProject", (req, res) => {
   }
 });
 
-//創建
-router.post("/createProject",(req,res)=>{
-  const {name,description,f_organization_uid,organization}=req.body;
+//創建project
+router.post("/createProject", (req, res) => {
 
-  if(!name||!description||!f_organization_uid||!organization){
-    return res.status(400).json({message:"All fields are required"});
-  }
+  const { name, description, organizationUID, organizationName } = req.body;
 
-  const newProject={
-    id:projects.length+1, //自動增量id
-    uid:uuidv4(),//生成唯一的uid
+  // 創建新的 project
+  const newProject = {
+    id: projects.length + 1, //自動增量id
+    uid: uuidv4(),//生成唯一的uid
     name,
     description,
     created_time: new Date().toISOString().replace('T', ' ').substring(0, 19), // 格式化當前時間
-    f_organization_uid,
-    organization
+    f_organization_uid: organizationUID,
+    organization: organizationName,
   };
 
-  projects.push(newProject);
+  try {
+    // 將新項目添加到數組中
+    projects.push(newProject);
+    console.log("New project created:", newProject); // 添加日誌
+    // 返回創建成功的響應
+    res.json({ detail: "Project created successfully", project: newProject });
+  } catch (error) {
+    console.error("Error creating project:", error); // 添加日誌
+    res.status(500).json({ detail: "Error creating project" });
+  }
 
-  res.status(201).json({ message: "Project created successfully", project: newProject });
 })
 
 module.exports = router;

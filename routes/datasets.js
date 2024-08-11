@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { v4: uuidv4 } = require("uuid");
 
 let datasets = [
   {
@@ -8,7 +9,8 @@ let datasets = [
     created_time: "2024-05-10 21:17:54",
     name: "UAV路徑預測 Original dataset 1",
     description: "original dataset description",
-    type: "original",
+    type: "Original",
+    file: "test",
     f_project_uid: "9d55a897-5b54-cdd2-8674-73484212e0b2", //UAV路徑預測project uid
     f_application_uid: " ",
   },
@@ -18,7 +20,8 @@ let datasets = [
     created_time: "2024-05-10 21:17:54",
     name: "AI數據分析 Original dataset 2",
     description: "original dataset description",
-    type: "original",
+    type: "Original",
+    file: "test",
     f_project_uid: "d1686018-45a0-98fa-6be6-5e4e58eac6ea", //AI數據分析project uid
     f_application_uid: " ",
   },
@@ -28,7 +31,8 @@ let datasets = [
     created_time: "2024-05-10 21:17:54",
     name: "UAV路徑預測 Training dataset 1",
     description: "training dataset description",
-    type: "training",
+    type: "Training",
+    file: "test",
     f_project_uid: "9d55a897-5b54-cdd2-8674-73484212e0b2", //UAV路徑預測project uid
     f_application_uid: " ",
   },
@@ -38,7 +42,8 @@ let datasets = [
     created_time: "2024-05-10 21:17:54",
     name: "AI數據分析 Training dataset 1",
     description: "training dataset description",
-    type: "training",
+    type: "Training",
+    file: "test",
     f_project_uid: "d1686018-45a0-98fa-6be6-5e4e58eac6ea", //AI數據分析project uid
     f_application_uid: " ",
   },
@@ -48,7 +53,8 @@ let datasets = [
     created_time: "2024-05-10 21:17:54",
     name: "UAV路徑預測 Original dataset 2",
     description: "original dataset description",
-    type: "original",
+    type: "Original",
+    file: "test",
     f_project_uid: "9d55a897-5b54-cdd2-8674-73484212e0b2", //UAV路徑預測project uid
     f_application_uid: " ",
   },
@@ -58,7 +64,8 @@ let datasets = [
     created_time: "2024-05-10 21:17:54",
     name: "UAV路徑預測 Training dataset 2",
     description: "training dataset description",
-    type: "training",
+    type: "Training",
+    file: "test",
     f_project_uid: "9d55a897-5b54-cdd2-8674-73484212e0b2", //UAV路徑預測project uid
     f_application_uid: " ",
   },
@@ -69,8 +76,7 @@ router.post("/getDatasets", (req, res) => {
   const { uid, activeTab } = req.body;
 
   const filteredDatasets = datasets.filter(
-    (dataset) =>
-      dataset.f_project_uid === uid && dataset.type === activeTab
+    (dataset) => dataset.f_project_uid === uid && dataset.type === activeTab
   );
 
   if (filteredDatasets.length > 0) {
@@ -79,9 +85,49 @@ router.post("/getDatasets", (req, res) => {
     res.status(404).json({ message: "Datasets not found" });
   }
 });
+
+//下載dataset file
+router.post("/getDatasetFile", (req, res) => {
+  const { uid } = req.body;
+  const filteredDataset = datasets.filter((dataset) => dataset.uid === uid);
+  if (filteredDataset.length > 0) {
+    const { file, name } = filteredDataset;
+
+    //創建一個新的zip檔
+    res.setHeader("Content-Type", "application/zip");
+    res.setHeader("Content-Disposition", `attachment; filename=${name}.zip`);
+
+    const archive = archiver("zip", {
+      zlib: { level: 9 }, // 設置壓縮等級
+    });
+
+    // 處理壓縮過程中的錯誤
+    archive.on("error", (err) => {
+      console.error("Error creating ZIP archive:", err);
+      res.status(500).json({ message: "Error creating ZIP archive" });
+    });
+
+    // 壓縮完成後自動結束響應
+    archive.on("end", () => {
+      console.log("ZIP file has been sent successfully.");
+    });
+
+    // 將 ZIP 壓縮流發送到響應中
+    archive.pipe(res);
+
+    // 添加字符串作為文件到 ZIP 中
+    archive.append(file, { name: `${name}.txt` });
+
+    // 結束壓縮流
+    archive.finalize();
+  } else {
+    res.status(404).json({ message: "Dataset not found" });
+  }
+});
+
 //更新dataset
 router.post("/updateDataset", (req, res) => {
-  const { uid,name,description } = req.body;
+  const { uid, name, description } = req.body;
 
   let dataset = datasets.find((d) => d.uid === uid);
 
@@ -105,6 +151,35 @@ router.post("/deleteDataset", (req, res) => {
     res.json({ message: "Dataset deleted successfully" });
   } else {
     res.status(404).json({ message: "Dataset not found" });
+  }
+});
+
+//創建dataset
+router.post("/createDataset", (req, res) => {
+  const { projectUID, name, file, type, description, applicationUID } =
+    req.body;
+
+  //創建新的dataset
+  const newDataset = {
+    id: datasets.length + 1, //自動增量id
+    uid: uuidv4(), //生成唯一的uuid
+    name,
+    description,
+    type,
+    file,
+    created_time: new Date().toISOString().replace("T", " ").substring(0, 19), // 格式化當前時間
+    f_project_uid: projectUID,
+    f_application_uid: applicationUID,
+  };
+
+  try {
+    //將新項目添加到數組中
+    datasets.push(newDataset);
+    console.log("New Dataset created:", newDataset);
+    res.json({ message: "Dataset created successfully", dataset: newDataset });
+  } catch (error) {
+    console.error("Error creating dataset:", error);
+    res.status(500).json({ message: "Error creating dataset" });
   }
 });
 
