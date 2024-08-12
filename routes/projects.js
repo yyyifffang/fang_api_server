@@ -58,22 +58,30 @@ router.post("/deleteProject", (req, res) => {
   }
 });
 
-//創建
-router.post("/createProject",(req,res)=>{
-  const {name,description,f_organization_uid,organization}=req.body;
+//創建project
+router.post("/createProject", (req, res) => {
+  const { name, description, organizationUID, organizationName } = req.body;
 
-  if(!name||!description||!f_organization_uid||!organization){
-    return res.status(400).json({message:"All fields are required"});
+  // 檢查必填字段
+  if (!name || !description || !organizationUID || !organizationName) {
+    return res.status(400).json({ message: "All fields are required" });
   }
 
-  const newProject={
-    id:projects.length+1, //自動增量id
-    uid:uuidv4(),//生成唯一的uid
+  // 檢查資料類型
+  if (typeof name !== 'string' || typeof description !== 'string' ||
+    typeof organizationUID !== 'string' || typeof organizationName !== 'string') {
+    return res.status(400).json({ message: "Invalid field types" });
+  }
+
+  // 創建新的 project
+  const newProject = {
+    id: projects.length + 1, //自動增量id
+    uid: uuidv4(),//生成唯一的uid
     name,
     description,
     created_time: new Date().toISOString().replace('T', ' ').substring(0, 19), // 格式化當前時間
-    f_organization_uid,
-    organization
+    f_organization_uid: organizationUID,
+    organization: organizationName,
   };
 
   projects.push(newProject);
