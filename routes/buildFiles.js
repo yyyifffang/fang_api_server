@@ -114,10 +114,9 @@ let buildFiles = [
 
 // 取得buildfiles
 router.post("/getBuildFiles", (req, res) => {
-  const { uid, type } = req.body;
+  const { uid } = req.body;
   const filteredBuildFiles = buildFiles.filter(
-    (buildFile) =>
-      buildFile.f_pipeline_uid === uid && buildFile.type === type
+    (buildFile) => buildFile.f_pipeline_uid === uid
   );
   if (filteredBuildFiles.length > 0) {
     res.json(filteredBuildFiles);
