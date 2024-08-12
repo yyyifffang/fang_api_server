@@ -92,14 +92,52 @@ let tasks = [
     status: "Failed",
     f_pipeline_uid: "39ea45ea-fab1-ba4d-1057-79fc317917a6", //UAV路徑預測 preprocessing pipeline 1
   },
+  {
+    id: 10,
+    uid: "222fe423-bb3d-421f-ba56-cd9398cfd4c6",
+    created_time: "2024-05-10 21:17:54",
+    name: "UAV路徑預測 tuning task 1",
+    description: "tuning task description",
+    type: "Tuning",
+    status: "Success",
+    f_pipeline_uid: "9744050f-719b-4c67-9adb-6317e5b9cfd7", //UAV路徑預測 tuning pipeline 1
+  },
+  {
+    id: 11,
+    uid: "fd874079-b438-4638-8e5d-f1b194779bd0",
+    created_time: "2024-05-10 21:17:54",
+    name: "UAV路徑預測 tuning task 2",
+    description: "tuning task description",
+    type: "Tuning",
+    status: "Failed",
+    f_pipeline_uid: "9744050f-719b-4c67-9adb-6317e5b9cfd7", //UAV路徑預測 tuning pipeline 1
+  },
+  {
+    id: 12,
+    uid: "2dfd28a0-5460-4668-89f8-41a9059a3e3d",
+    created_time: "2024-05-10 21:17:54",
+    name: "UAV路徑預測 retrain task 1",
+    description: "Retraining task description",
+    type: "Retraining",
+    status: "Failed",
+    f_pipeline_uid: "9b9d8e96-67d5-4608-91db-0b6373575d28", //UAV路徑預測 retrain pipeline 1
+  },
+  {
+    id: 13,
+    uid: "e2223eb8-27ea-4d94-ba33-37ed985d32da",
+    created_time: "2024-05-10 21:17:54",
+    name: "UAV路徑預測 retrain task 2",
+    description: "Retraining task description",
+    type: "Retraining",
+    status: "Failed",
+    f_pipeline_uid: "9b9d8e96-67d5-4608-91db-0b6373575d28", //UAV路徑預測 retrain pipeline 1
+  },
 ];
 
 // 取得tasks
 router.post("/getTasks", (req, res) => {
-  const { uid, type } = req.body;
-  const filterTasks = tasks.filter(
-    (task) => task.f_pipeline_uid === uid && task.type === type
-  );
+  const { uid } = req.body;
+  const filterTasks = tasks.filter((task) => task.f_pipeline_uid === uid);
   if (filterTasks.length > 0) {
     res.json(filterTasks);
   } else {

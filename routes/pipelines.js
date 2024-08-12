@@ -111,6 +111,24 @@ let pipelines = [
     type: "Evaluation",
     f_application_uid: "3d064139-bad9-a033-5e89-960948ff9c17", //UAV路徑預測 application 1
   },
+  {
+    id: 13,
+    uid: "0e8e8571-2c71-4677-bd4e-e13176584bc6",
+    created_time: "2024-05-10 21:17:54",
+    name: "UAV路徑預測 retrain pipeline 2",
+    description: "retrain pipeline description",
+    type: "Retraining",
+    f_application_uid: "3d064139-bad9-a033-5e89-960948ff9c17", //UAV路徑預測 application 1
+  },
+  {
+    id: 14,
+    uid: "db5b94be-5bf1-4db0-b85e-e335d7d5b032",
+    created_time: "2024-05-10 21:17:54",
+    name: "UAV路徑預測 tuning pipeline 2",
+    description: "tuning pipeline description",
+    type: "Tuning",
+    f_application_uid: "3d064139-bad9-a033-5e89-960948ff9c17", //UAV路徑預測 application 1
+  },
 ];
 
 // 取得pipelines
