@@ -14,4 +14,3 @@ router.post("/getOrganization", (req, res) => {
 });
 
 module.exports = router;
-  

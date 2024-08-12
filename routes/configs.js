@@ -74,13 +74,31 @@ let configs = [
     type: "training",
     f_pipeline_uid: "8dd11e37-1b7e-cf24-71f2-5d8d7d058f31", //AI數據分析 training pipeline 1
   },
+  {
+    id: 9,
+    uid: "9b066400-e322-42d3-8414-41daf4a92c2b",
+    created_time: "2024-05-10 21:17:54",
+    name: "UAV路徑預測 tuning config 1",
+    description: "tuning config description",
+    type: "Tuning",
+    f_pipeline_uid: "9744050f-719b-4c67-9adb-6317e5b9cfd7", //UAV路徑預測 tuning pipeline 1
+  },
+  {
+    id: 10,
+    uid: "1e0b71ac-e8a5-44d4-94e9-4cd17adde6a3",
+    created_time: "2024-05-10 21:17:54",
+    name: "UAV路徑預測 tuning config 2",
+    description: "tuning config description",
+    type: "Tuning",
+    f_pipeline_uid: "9744050f-719b-4c67-9adb-6317e5b9cfd7", //UAV路徑預測 tuning pipeline 1
+  },
 ];
 
 // 取得configs
 router.post("/getConfigs", (req, res) => {
-  const { uid, type } = req.body;
+  const { uid } = req.body;
   const filteredConfigs = configs.filter(
-    (config) => config.f_pipeline_uid === uid && config.type === type
+    (config) => config.f_pipeline_uid === uid
   );
 
   if (filteredConfigs.length > 0) {

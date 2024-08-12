@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {v4:uuidv4}=require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 let projects = [
   {
@@ -60,18 +60,8 @@ router.post("/deleteProject", (req, res) => {
 
 //創建project
 router.post("/createProject", (req, res) => {
+
   const { name, description, organizationUID, organizationName } = req.body;
-
-  // 檢查必填字段
-  if (!name || !description || !organizationUID || !organizationName) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
-
-  // 檢查資料類型
-  if (typeof name !== 'string' || typeof description !== 'string' ||
-    typeof organizationUID !== 'string' || typeof organizationName !== 'string') {
-    return res.status(400).json({ message: "Invalid field types" });
-  }
 
   // 創建新的 project
   const newProject = {
@@ -84,9 +74,17 @@ router.post("/createProject", (req, res) => {
     organization: organizationName,
   };
 
-  projects.push(newProject);
+  try {
+    // 將新項目添加到數組中
+    projects.push(newProject);
+    console.log("New project created:", newProject); // 添加日誌
+    // 返回創建成功的響應
+    res.json({ detail: "Project created successfully", project: newProject });
+  } catch (error) {
+    console.error("Error creating project:", error); // 添加日誌
+    res.status(500).json({ detail: "Error creating project" });
+  }
 
-  res.status(201).json({ message: "Project created successfully", project: newProject });
 })
 
 module.exports = router;

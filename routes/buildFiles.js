@@ -74,14 +74,49 @@ let buildFiles = [
     type: "training",
     f_pipeline_uid: "8dd11e37-1b7e-cf24-71f2-5d8d7d058f31", //AI數據分析 training pipeline 1
   },
+  {
+    id: 8,
+    uid: "3fefef93-f2d8-4dfd-abae-da224562e01d",
+    created_time: "2024-05-10 21:17:54",
+    name: "UAV路徑預測 tuning build file 1",
+    description: "tuning build file description",
+    type: "Tuning",
+    f_pipeline_uid: "9744050f-719b-4c67-9adb-6317e5b9cfd7", //UAV路徑預測 tuning pipeline 1
+  },
+  {
+    id: 9,
+    uid: "f93b2bf5-1742-449e-8618-425b111a3699",
+    created_time: "2024-05-10 21:17:54",
+    name: "UAV路徑預測 tuning build file 2",
+    description: "tuning build file description",
+    type: "Tuning",
+    f_pipeline_uid: "9744050f-719b-4c67-9adb-6317e5b9cfd7", //UAV路徑預測 tuning pipeline 1
+  },
+  {
+    id: 10,
+    uid: "f5ccc432-25ee-4780-8c4a-ba46736138b6",
+    created_time: "2024-05-10 21:17:54",
+    name: "UAV路徑預測 retrain build file 1",
+    description: "retrain build file description",
+    type: "Retraining",
+    f_pipeline_uid: "9b9d8e96-67d5-4608-91db-0b6373575d28", //UAV路徑預測 retrain pipeline 1
+  },
+  {
+    id: 11,
+    uid: "888324e0-8dec-426b-9d04-759d53bce8d8",
+    created_time: "2024-05-10 21:17:54",
+    name: "UAV路徑預測 retrain build file 2",
+    description: "retrain build file description",
+    type: "Retraining",
+    f_pipeline_uid: "9b9d8e96-67d5-4608-91db-0b6373575d28", //UAV路徑預測 retrain pipeline 1
+  },
 ];
 
 // 取得buildfiles
 router.post("/getBuildFiles", (req, res) => {
-  const { uid, type } = req.body;
+  const { uid } = req.body;
   const filteredBuildFiles = buildFiles.filter(
-    (buildFile) =>
-      buildFile.f_pipeline_uid === uid && buildFile.type === type
+    (buildFile) => buildFile.f_pipeline_uid === uid
   );
   if (filteredBuildFiles.length > 0) {
     res.json(filteredBuildFiles);
